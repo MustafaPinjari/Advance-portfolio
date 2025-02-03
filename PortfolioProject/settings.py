@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1bc3dlo&@)a_ccz*19)5rru*+-%a8di-b1zxdhi6te%ctcr!&y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if not DEBUG:
     # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
@@ -21,7 +21,12 @@ if not DEBUG:
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "advance-portfolio-vt93.onrender.com", 
+    "localhost",
+    "127.0.0.1"
+]
+
 
 
 INSTALLED_APPS = [
