@@ -97,11 +97,11 @@ WSGI_APPLICATION = 'PortfolioProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Blog',
-        'USER': 'blog_cvcg_user',
-        'PASSWORD': 'y45AJMIpcsAcsZ40oFQK9ac1KZc6ZiDC',
-        'HOST': 'dpg-cugfiri3esus73feimog-a',
-        'PORT': '5432',
+        'NAME': os.getenv("DB_NAME", "Blog"),
+        'USER': os.getenv("DB_USER", "blog_cvcg_user"),
+        'PASSWORD': os.getenv("DB_PASSWORD", "y45AJMIpcsAcsZ40oFQK9ac1KZc6ZiDC"),
+        'HOST': os.getenv("DB_HOST", "dpg-cugfiri3esus73feimog-a"),
+        'PORT': os.getenv("DB_PORT", "5432"),
     }
 }
 
