@@ -100,7 +100,7 @@ DATABASES = {
         'NAME': 'dpg-cugfiri3esus73feimog-a',
         'USER': 'blog_cvcg_user',
         'PASSWORD': 'y45AJMIpcsAcsZ40oFQK9ac1KZc6ZiDC',
-        'HOST': 'postgresql://blog_cvcg_user:y45AJMIpcsAcsZ40oFQK9ac1KZc6ZiDC@dpg-cugfiri3esus73feimog-a.oregon-postgres.render.com/blog_cvcg',
+        'HOST': 'dpg-cugfiri3esus73feimog-a',
         'PORT': '5432',
     }
 }
