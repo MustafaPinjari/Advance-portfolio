@@ -3,6 +3,7 @@ whitenoise>=6.0
 markdown
 dj_database_url
 djangorestframework
+psycopg2-binary
 
 # ASGI dependencies (for Uvicorn/Gunicorn deployment)
 gunicorn
