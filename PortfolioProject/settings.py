@@ -21,11 +21,7 @@ if not DEBUG:
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-ALLOWED_HOSTS = [
-    "advance-portfolio-vt93.onrender.com", 
-    "localhost",
-    "127.0.0.1"
-]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "advance-portfolio-vt93.onrender.com,localhost,127.0.0.1").split(",")
 
 
 
