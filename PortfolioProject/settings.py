@@ -86,13 +86,25 @@ WSGI_APPLICATION = 'PortfolioProject.wsgi.application'
 # }
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default='postgresql://postgres:postgres@localhost:5432/mysite',
+#         conn_max_age=600
+#     )
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dpg-cugfiri3esus73feimog-a',
+        'USER': 'blog_cvcg_user',
+        'PASSWORD': 'y45AJMIpcsAcsZ40oFQK9ac1KZc6ZiDC',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
+
 
 # Static and Media settings
 STATIC_URL = '/static/'
