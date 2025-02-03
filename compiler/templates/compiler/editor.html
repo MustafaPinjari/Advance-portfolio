@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Python Compiler</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: #11001f;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+        }
+
+        #editor-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        #editor {
+            flex: 1;
+            border: 1px solid #444;
+            border-radius: 8px;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1e1e2e;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        button {
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: #53107e;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor-container">
+        <h1 class="text-3xl font-bold mb-6">Online Python Compiler</h1>
+        <div id="editor"></div>
+        <button id="run-button">Run Code</button>
+        <div id="output">Output will be displayed here...</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            const editor = monaco.editor.create(document.getElementById('editor'), {
+                value: 'print("Hello, World!")',
+                language: 'python',
+                theme: 'vs-dark',
+            });
+
+            document.getElementById('run-button').addEventListener('click', () => {
+                const code = editor.getValue();
+                const outputDiv = document.getElementById('output');
+                outputDiv.textContent = "Running...";
+
+                fetch('/api/execute/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code }),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Server error: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        outputDiv.textContent = data.output || "No output.";
+                    })
+                    .catch(error => {
+                        outputDiv.textContent = `Error: ${error.message}`;
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

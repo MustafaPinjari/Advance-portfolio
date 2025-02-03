@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog List</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap">
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('close-sidebar');
+    
+        // Open Sidebar
+        menuButton.addEventListener('click', () => {
+            sidebar.style.transform = 'translateX(0)';
+        });
+    
+        // Close Sidebar
+        closeSidebar.addEventListener('click', () => {
+            sidebar.style.transform = 'translateX(100%)';
+        });
+    
+        // Close Sidebar When Clicking Outside
+        window.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && e.target !== menuButton) {
+                sidebar.style.transform = 'translateX(100%)';
+            }
+        });
+    </script>
+    
+</head>
+<body class="w-screen overflow-x-hidden dark:bg-darkTheme dark:text-white">
+    <!-- Navbar -->
+    <nav class="fixed top-0 z-50 w-full flex items-center justify-between px-[8%] py-4 bg-darkTheme shadow-sm">
+        <!-- Logo -->
+        <img src="{% static 'img/Mustafa_dark.png' %}" alt="Logo" class="w-28">
+    
+        <!-- Menu Items (Hidden on Mobile) -->
+        <ul class="hidden md:flex gap-6">
+            <li><a href="{% url 'home' %}" class="hover:text-lightHover" style="color: #ff7f50;">Home</a></li>
+            <li><a href="/about" class="hover:text-lightHover" style="color: #ff7f50;">About</a></li>
+            <li><a href="/blogs" class="hover:text-lightHover" style="color: #ff7f50;">Blogs</a></li>
+            <li><a href="/contact" class="hover:text-lightHover" style="color: #ff7f50;">Contact</a></li>
+        </ul>
+    
+        <!-- Hamburger Icon (Visible on Mobile) -->
+        <button id="menu-button" class="md:hidden text-3xl text-coral focus:outline-none">
+            &#9776; <!-- Hamburger Icon -->
+        </button>
+    
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed top-0 right-0 w-64 h-full bg-darkTheme shadow-lg transform translate-x-full transition-transform duration-300">
+            <button id="close-sidebar" class="absolute top-4 right-4 text-2xl text-white focus:outline-none">
+                &times; <!-- Close Icon -->
+            </button>
+            <ul class="mt-20 flex flex-col gap-6 px-6">
+                <li><a href="{% url 'home' %}" class="text-white hover:text-coral">Home</a></li>
+                <li><a href="{% url 'home' %}" class="text-white hover:text-coral">About</a></li>
+                <li><a href="{% url 'blog:blog_list' %}" class="text-white hover:text-coral">Blogs</a></li>
+                <li><a href="{% url 'home' %}" class="text-white hover:text-coral">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    <!-- Blog List -->
+    <main class="mt-20 px-[8%]"> <!-- Add `mt-20` to push content below the navbar -->
+        <h1 class="text-5xl font-bold mb-8">Latest Blog Posts</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in posts %}
+            <div class="bg-darkHover p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover rounded mb-4">
+                {% endif %}
+                <h2 class="text-2xl font-semibold mb-2"><a href="{{ post.slug }}" class="hover:text-lightHover">{{ post.title }}</a></h2>
+                <p class="text-gray-400 text-sm mb-4">By {{ post.author }} | {{ post.created_at|date:"F j, Y" }}</p>
+                <p class="text-gray-300">{{ post.content|safe|truncatechars:200 }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    
+  
+     <!-- footer -->
+      <footer class="mx-auto flex w-full flex-col px-[8%] text-gray-400">
+        <!-- email part -->
+        <div
+          class="flex w-full flex-col items-center gap-5 border-b-[0.5px] border-gray-500 pb-20"
+        >
+          <img src="{% static 'img/logo.png'%}"  loading="lazy" alt="" class="w-40 dark:hidden" />
+          <img src="{% static 'img/logo_dark.png'%}" loading="lazy"alt="" class="hidden w-40 dark:block" />
+          <p
+            class="flex gap-2 text-center text-sm text-gray-800 dark:text-white"
+          >
+            <img src="{% static 'img/mail_icon.png' %}" loading="lazy" alt="" class="w-6 dark:hidden" />
+            <img
+              src="{% static 'img/mail_icon_dark.png'%}"
+              loading="lazy"
+              alt=""
+              class="hidden w-6 dark:block"
+            />
+          mustafapinjari344@gmail.com  
+          </p>
+        </div>
+        <!-- link part -->
+        <div
+          class="flex flex-col items-center justify-between gap-5 py-10 md:flex-row"
+        >
+          <p class="text-lg font-semibold dark:font-normal">
+            &copy; 2024 Mustafa Pinjari. All rights reserved.
+          </p>
+          <div class="flex gap-8 md:gap-12 text-white-400">
+            <a href="https://github.com/MustafaPinjari" class="font-medium">Github</a>
+            <a href="https://www.linkedin.com/in/mustafa-pinjari-287625256/" class="font-medium">Linkedin</a>
+            <a href="https://www.instagram.com/its_ur_musuuu/" class="font-medium">Instagram</a>
+          </div>
+        </div>
+      </footer>
+    
+</body>
+</html>

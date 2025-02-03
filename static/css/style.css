@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "outfit";
+}
+
+/* h1,h2,h3,h4,h5,h6,p, nav a{
+    font-family: "ovo";
+} */
+.error-message {
+  color: red;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .projects-section {
+      display: none;
+  }
+}
+
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+}
+
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+

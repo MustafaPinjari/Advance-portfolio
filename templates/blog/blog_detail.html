@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog_post.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap">
+</head>
+<body class="w-screen overflow-x-hidden dark:bg-darkTheme dark:text-white">
+    <!-- Navbar -->
+    <nav class="fixed top-0 z-50 w-full flex items-center justify-between px-[8%] py-4 bg-darkTheme shadow-sm">
+        <!-- Logo -->
+        <img src="{% static 'img/Mustafa_dark.png' %}" alt="Logo" class="w-28">
+    
+        <!-- Menu Items (Hidden on Mobile) -->
+        <ul class="mt-20 flex flex-col gap-6 px-6">
+          <li><a href="" class="text-white hover:text-coral">Home</a></li>
+          
+      </ul>
+    
+        <!-- Hamburger Icon (Visible on Mobile) -->
+        <button id="menu-button" class="md:hidden text-3xl text-coral focus:outline-none">
+            &#9776; <!-- Hamburger Icon -->
+        </button>
+    
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed top-0 right-0 w-64 h-full bg-darkTheme shadow-lg transform translate-x-full transition-transform duration-300">
+            <button id="close-sidebar" class="absolute top-4 right-4 text-2xl text-white focus:outline-none">
+                &times; <!-- Close Icon -->
+            </button>
+            <ul class="mt-20 flex flex-col gap-6 px-6">
+              <li><a href="#" class="text-white hover:text-coral">Home</a></li>
+            
+          </ul>
+        </div>
+    </nav>
+    
+
+    <!-- Blog Detail -->
+    <main class="px-[8%] mt-20"> <!-- Add `mt-20` to push content below the navbar -->
+        <div class="rounded-lg p-8 shadow-lg">
+            <!-- Blog Title -->
+            <h1 class="text-5xl font-bold mb-4">{{ blog_post.title }}</h1>
+            
+<!-- Author and Date with Styled Share Button -->
+<p class="text-gray-400 mb-6 flex items-center gap-4">
+    By <span class="font-semibold">{{ blog_post.author }}</span> | 
+    {{ blog_post.created_at|date:"F j, Y" }}
+
+    <button 
+    id="share-button" 
+    style="background-color: #11001f; color: white; padding: 2px 10px; border-radius: 50px; margin-left:200px ;"
+    onclick="shareBlog()">
+    Share Blog
+  </button>
+</p>
+
+<!-- Share Button -->
+
+ 
+
+
+    
+            <!-- Blog Image -->
+            {% if blog_post.image %}
+            <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}" class="w-full rounded-lg shadow-md object-cover max-h-96 mb-6">
+            {% endif %}
+    
+            <!-- Blog Content -->
+            <article class="prose dark:prose-invert max-w-none">
+                {{ blog_post.content|safe }}
+            </article>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+          <!-- footer -->
+          <footer class="mx-auto flex w-full flex-col px-[8%]">
+            <!-- email part -->
+            <div
+              class="flex w-full flex-col items-center gap-5 border-b-[0.5px] border-gray-500 pb-20"
+            >
+              <img src="{% static 'img/logo.png'%}"  loading="lazy" alt="" class="w-40 dark:hidden" />
+              <img src="{% static 'img/logo_dark.png'%}" loading="lazy"alt="" class="hidden w-40 dark:block" />
+              <p
+                class="flex gap-2 text-center text-sm text-gray-800 dark:text-white"
+              >
+                <img src="{% static 'img/mail_icon.png' %}" loading="lazy" alt="" class="w-6 dark:hidden" />
+                <img
+                  src="{% static 'img/mail_icon_dark.png'%}"
+                  loading="lazy"
+                  alt=""
+                  class="hidden w-6 dark:block"
+                />
+              mustafapinjari344@gmail.com  
+              </p>
+            </div>
+            <!-- link part -->
+            <div
+              class="flex flex-col items-center justify-between gap-5 py-10 md:flex-row"
+            >
+              <p class="text-lg font-semibold dark:font-normal">
+                &copy; 2024 Mustafa Pinjari. All rights reserved.
+              </p>
+              <div class="flex gap-8 md:gap-12">
+                <a href="https://github.com/MustafaPinjari" class="font-medium">Github</a>
+                <a href="https://www.linkedin.com/in/mustafa-pinjari-287625256/" class="font-medium">Linkedin</a>
+                <a href="https://www.instagram.com/its_ur_musuuu/" class="font-medium">Instagram</a>
+              </div>
+            </div>
+          </footer>
+          <script>
+            function shareBlog() {
+                const blogTitle = "{{ blog_post.title }}";
+                const blogUrl = window.location.href; // Current page URL
+                const shareText = `Check out this blog: "${blogTitle}"`;
+        
+                if (navigator.share) {
+                    // Use Web Share API if supported
+                    navigator.share({
+                        title: blogTitle,
+                        text: shareText,
+                        url: blogUrl,
+                    })
+                    .then(() => console.log('Blog shared successfully'))
+                    .catch((error) => console.error('Error sharing blog:', error));
+                } else {
+                    // Fallback for browsers without Web Share API
+                    const tempInput = document.createElement('input');
+                    document.body.appendChild(tempInput);
+                    tempInput.value = blogUrl;
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+        
+                    alert('Blog link copied to clipboard! You can now share it manually.');
+                }
+            }
+        </script>
+        
+</body>
+</html>
