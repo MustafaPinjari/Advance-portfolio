@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'PortfolioProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'Blog',
         'NAME': 'dpg-cugfiri3esus73feimog-a',
         'USER': 'blog_cvcg_user',
         'PASSWORD': 'y45AJMIpcsAcsZ40oFQK9ac1KZc6ZiDC',
