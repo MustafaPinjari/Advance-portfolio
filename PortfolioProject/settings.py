@@ -105,11 +105,16 @@ WSGI_APPLICATION = 'PortfolioProject.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv("DATABASE_URL")  # Ensure it uses the correct Render DB
+#     )
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL")  # Ensure it uses the correct Render DB
-    )
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
+
 
 
 # Static and Media settings
